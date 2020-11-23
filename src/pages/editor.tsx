@@ -1,5 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import { useStateWithStorage } from '../hocks/use_state_with_storage'
+import * as ReactMarkdown from 'react-markdown'
 
 const Header = styled.header`
   position: fixed;
@@ -43,15 +45,24 @@ const Preview = styled.div`
   padding: 2rem;
 `
 
+const StorageKey = 'pages/editor:text'
+
 export const Editor: React.FC = () => {
+  const [text, setText] = useStateWithStorage('', StorageKey)
+
   return (
     <>
       <Header>
         Markdown Editor
       </Header>
       <Wrapper>
-        <TextArea value="テキスト入力エリア" />
-        <Preview>プレビューエリア</Preview>
+        <TextArea
+         onChange={(event) => setText(event.target.value)}
+         value={text}
+        />
+        <Preview>
+          <ReactMarkdown source={text} />
+        </Preview>
       </Wrapper>
     </>
   )
