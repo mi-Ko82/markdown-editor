@@ -5,35 +5,24 @@ import * as ReactMarkdown from 'react-markdown'
 import { putMemo } from '../indexeddb/memos'
 import { Button } from '../components/button'
 import { SaveModal } from '../components/save_modal'
+import { Link } from 'react-router-dom'
+import { Header } from '../components/header'
 
 const { useState } = React
-
-const Header = styled.header`
-  display: flex;
-  align-content: center;
-  justify-content: space-between;
-  position: fixed;
-  right: 0;
-  top: 0;
-  left: 0;
-  height: 2rem;
-  padding: 0.5rem 2rem;
-  font-size: 1.5rem;
-  line-height: 2rem;
-`
-
-const HeaderControl = styled.div`
-  height: 2rem;
-  display: flex;
-  align-content: center;
-`
 
 const Wrapper = styled.div`
   position: fixed;
   top: 3rem;
+  right: 0;
+  left: 0;
+  bottom: 0;
+`
+
+const HeaderArea = styled.div`
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
 `
 
 const TextArea = styled.textarea`
@@ -68,14 +57,16 @@ export const Editor: React.FC = () => {
 
   return (
     <>
-      <Header>
-        Markdown Editor
-        <HeaderControl>
+      <HeaderArea>
+        <Header title="Markdown Editor">
           <Button onClick={() => setShowModal(true)}>
             保存する
           </Button>
-        </HeaderControl>
-      </Header>
+          <Link to="/history">
+            履歴を見る
+          </Link>
+        </Header>
+      </HeaderArea>
       <Wrapper>
         <TextArea
          onChange={(event) => setText(event.target.value)}
